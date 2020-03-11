@@ -1,17 +1,25 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { TranslateTestingModule } from 'ngx-translate-testing';
+import { TranslateService } from '@ngx-translate/core';
+import { Title } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
+  let translate: TranslateService;
+  let titleService: Title;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateTestingModule.withTranslations({ en: require('src/assets/i18n/en.json'), de: require('src/assets/i18n/de.json') }),
       ],
       declarations: [
         AppComponent
       ],
     }).compileComponents();
+    translate = TestBed.inject(TranslateService);
+    titleService = TestBed.inject(Title);
   }));
 
   it('should create the app', () => {
@@ -20,16 +28,15 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'berlin-clock-angular'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('berlin-clock-angular');
+  it(`should have title in English`, () => {
+    TestBed.createComponent(AppComponent);
+    translate.use('en');
+    expect(titleService.getTitle()).toEqual('Berlin Clock');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('berlin-clock-angular app is running!');
+  it(`should have German title after switching to German`, () => {
+    TestBed.createComponent(AppComponent);
+    translate.use('de');
+    expect(titleService.getTitle()).toEqual('Berlin-Uhr');
   });
 });
