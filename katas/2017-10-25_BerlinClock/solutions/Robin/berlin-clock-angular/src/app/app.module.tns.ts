@@ -4,6 +4,7 @@ import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { AppRoutingModule } from '@src/app/app-routing.module.tns';
 import { AppComponent } from '@src/app/app.component';
 import { DisplayComponent } from '@src/app/components/display/display.component';
+import { ClockContainerComponent } from '@src/app/components/clock-container/clock-container.component';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from 'nativescript-angular/forms';
@@ -15,6 +16,7 @@ import { DisplayComponent } from '@src/app/components/display/display.component'
   declarations: [
     AppComponent,
     DisplayComponent,
+    ClockContainerComponent,
   ],
   imports: [
     NativeScriptModule,

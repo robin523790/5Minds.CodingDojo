@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DisplayComponent } from './components/display/display.component';
+import { ClockContainerComponent } from './components/clock-container/clock-container.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/clock', pathMatch: 'full' },
   {
     path: 'clock',
-    component: DisplayComponent,
+    component: ClockContainerComponent,
   },
 ];
 

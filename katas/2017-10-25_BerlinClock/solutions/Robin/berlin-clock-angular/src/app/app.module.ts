@@ -10,11 +10,13 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DisplayComponent } from '@src/app/components/display/display.component';
+import { ClockContainerComponent } from '@src/app/components/clock-container/clock-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DisplayComponent,
+    ClockContainerComponent,
   ],
   imports: [
     BrowserModule,
