@@ -1,1 +1,22 @@
-<p>Current time is: {{date}}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-4 light seconds" [ngClass]="clockData.secondField ? 'light-on' : 'light-off'"></div>
+    </div>
+    <div class="row">
+        <div *ngFor="let state of clockData.row5HourFields" class="col light hours"
+            [ngClass]="state ? 'light-on' : 'light-off'"></div>
+    </div>
+    <div class="row">
+        <div *ngFor="let state of clockData.row1HourFields" class="col light hours"
+            [ngClass]="state ? 'light-on' : 'light-off'"></div>
+    </div>
+    <div class="row">
+        <div *ngFor="let state of clockData.row5MinuteFields; index as idx" class="col light minutes minutes-small"
+            [ngClass]="{'light-on': state, 'light-off': !state, 'quarters': isQuarter(idx)}"></div>
+    </div>
+    <div class="row">
+        <div *ngFor="let state of clockData.row1MinuteFields" class="col light minutes"
+            [ngClass]="state ? 'light-on' : 'light-off'"></div>
+    </div>
+    <p>Current time is: {{date}}</p>
+</div>

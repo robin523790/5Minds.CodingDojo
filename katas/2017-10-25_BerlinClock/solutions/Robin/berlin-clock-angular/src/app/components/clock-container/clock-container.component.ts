@@ -10,11 +10,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './clock-container.component.html',
   styleUrls: ['./clock-container.component.scss']
 })
-export class ClockContainerComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class ClockContainerComponent {
+  date = new Date();
 }
