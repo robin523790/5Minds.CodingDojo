@@ -1,13 +1,12 @@
 $display-col-border: #101010;
-$display-col-inactive-seconds: #336633;
-$display-col-inactive-minutes: #555500;
-$display-col-inactive-quarters: #663300;
-$display-col-inactive-hours: #660000;
+$display-col-inactive-seconds: #114411;
+$display-col-inactive-minutes: #333300;
+$display-col-inactive-quarters: #442200;
+$display-col-inactive-hours: #440000;
 $display-col-active-seconds: #00ff00;
 $display-col-active-minutes: #ffff00;
-$display-col-active-quartes: #ff6600;
+$display-col-active-quarters: #ff6600;
 $display-col-active-hours: #ff0000;
-
 $display-width: 440px;
 $display-light-width: $display-width / 4;
 $display-light-height: 40px;
@@ -16,7 +15,7 @@ $display-light-small-width: $display-width / 11;
 $display-light-seconds-width: $display-width / 3;
 $display-light-seconds-height: $display-width / 3;
 $display-light-seconds-radius: $display-width / 3;
-
+$glow-effect-radius: 7px;
 
 // Pseudo-Bootstrap class, can be removed if Bootstrap is included in project
 .container {
@@ -39,6 +38,8 @@ $display-light-seconds-radius: $display-width / 3;
     height: $display-light-height;
     width: $display-light-width;
     border-radius: $display-light-radius;
+    background-image: radial-gradient(circle, #FFFFFF00, #00000033);
+    transition: all .4s ease-out;
 
     &.seconds {
         background-color: $display-col-inactive-seconds;
@@ -64,24 +65,27 @@ $display-light-seconds-radius: $display-width / 3;
     }
 
     &-on {
-        &.hours {
-            background-color: $display-col-active-hours;
-            box-shadow: 0 0 10px $display-col-active-hours;  // add glow effect: lights are bright!
-        }
-
-        &.quarters {
-            background-color: $display-col-active-quartes;
-            box-shadow: 0 0 10px $display-col-active-quartes;  // add glow effect: lights are bright!
+        z-index: 1;  // active values above inactive (for the glow effect)
+        
+        &.seconds {
+            background-color: $display-col-active-seconds;
+            box-shadow: 0 0 $glow-effect-radius $display-col-active-seconds;  // add glow effect: lights are bright!
         }
 
         &.minutes {
             background-color: $display-col-active-minutes;
-            box-shadow: 0 0 10px $display-col-active-minutes;  // add glow effect: lights are bright!
+            box-shadow: 0 0 $glow-effect-radius $display-col-active-minutes;  // add glow effect: lights are bright!
         }
 
-        &.seconds {
-            background-color: $display-col-active-seconds;
-            box-shadow: 0 0 10px $display-col-active-seconds;  // add glow effect: lights are bright!
+        &.quarters {
+            background-color: $display-col-active-quarters;
+            box-shadow: 0 0 $glow-effect-radius $display-col-active-quarters;  // add glow effect: lights are bright!
+            z-index: 2;  // active quarters above others (for the glow effect)
+        }
+
+        &.hours {
+            background-color: $display-col-active-hours;
+            box-shadow: 0 0 $glow-effect-radius $display-col-active-hours;  // add glow effect: lights are bright!
         }
     }
 }
