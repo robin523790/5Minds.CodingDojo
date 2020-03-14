@@ -26,36 +26,24 @@ describe('ClockData', () => {
     });
 
     it('should catch invalid hours argument', () => {
-        let val;
-        val = undefined; expect(() => new ClockData(val, 0, 0)).toThrowError(`invalid argument 'hours: ${val}'`);
-        val = null; expect(() => new ClockData(val, 0, 0)).toThrowError(`invalid argument 'hours: ${val}'`);
-        val = 1.4; expect(() => new ClockData(val, 0, 0)).toThrowError(`invalid argument 'hours: ${val}'`);
-        val = -1; expect(() => new ClockData(val, 0, 0)).toThrowError(`invalid argument 'hours: ${val}'`);
-        val = 24; expect(() => new ClockData(val, 0, 0)).toThrowError(`invalid argument 'hours: ${val}'`);
-        val = 'test'; expect(() => new ClockData(val, 0, 0)).toThrowError(`invalid argument 'hours: ${val}'`);
-        val = '1'; expect(() => new ClockData(val, 0, 0)).toThrowError(`invalid argument 'hours: ${val}'`);
+        const tests = [undefined, null, 1.4, -1, 24, 'test', '1'];
+        for (const test of tests) {
+            expect(() => new ClockData(test as number, 0, 0)).toThrowError(`invalid argument 'hours: ${test}'`);
+        }
     });
 
     it('should catch invalid minutes argument', () => {
-        let val;
-        val = undefined; expect(() => new ClockData(0, val, 0)).toThrowError(`invalid argument 'minutes: ${val}'`);
-        val = null; expect(() => new ClockData(0, val, 0)).toThrowError(`invalid argument 'minutes: ${val}'`);
-        val = 1.4; expect(() => new ClockData(0, val, 0)).toThrowError(`invalid argument 'minutes: ${val}'`);
-        val = -1; expect(() => new ClockData(0, val, 0)).toThrowError(`invalid argument 'minutes: ${val}'`);
-        val = 60; expect(() => new ClockData(0, val, 0)).toThrowError(`invalid argument 'minutes: ${val}'`);
-        val = 'test'; expect(() => new ClockData(0, val, 0)).toThrowError(`invalid argument 'minutes: ${val}'`);
-        val = '1'; expect(() => new ClockData(0, val, 0)).toThrowError(`invalid argument 'minutes: ${val}'`);
+        const tests = [undefined, null, 1.4, -1, 60, 'test', '1'];
+        for (const test of tests) {
+            expect(() => new ClockData(0, test as number, 0)).toThrowError(`invalid argument 'minutes: ${test}'`);
+        }
     });
 
     it('should catch invalid seconds argument', () => {
-        let val;
-        val = undefined; expect(() => new ClockData(0, 0, val)).toBeTruthy();  // special case...
-        val = null; expect(() => new ClockData(0, 0, val)).toThrowError(`invalid argument 'secs: ${val}'`);
-        val = 1.4; expect(() => new ClockData(0, 0, val)).toThrowError(`invalid argument 'secs: ${val}'`);
-        val = -1; expect(() => new ClockData(0, 0, val)).toThrowError(`invalid argument 'secs: ${val}'`);
-        val = 60; expect(() => new ClockData(0, 0, val)).toThrowError(`invalid argument 'secs: ${val}'`);
-        val = 'test'; expect(() => new ClockData(0, 0, val)).toThrowError(`invalid argument 'secs: ${val}'`);
-        val = '1'; expect(() => new ClockData(0, 0, val)).toThrowError(`invalid argument 'secs: ${val}'`);
+        const tests = [/*undefined <- allowed!*/ null, 1.4, -1, 60, 'test', '1'];
+        for (const test of tests) {
+            expect(() => new ClockData(0, 0, test as number)).toThrowError(`invalid argument 'secs: ${test}'`);
+        }
     });
 
     it('should parse 00:01:00 correctly', () => {

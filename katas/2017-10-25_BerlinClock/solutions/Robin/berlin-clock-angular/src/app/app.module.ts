@@ -5,10 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '@src/app/app-routing.module';
 
 // Angular Material modules
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatSelectModule } from '@angular/material/select';
+import { MaterialModule } from './material.module';
 
 // import ngx-translate and the http loader
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -32,10 +29,7 @@ import { ClockContainerComponent } from '@src/app/components/clock-container/clo
     AppRoutingModule,
 
     // Angular Material modules
-    MatIconModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatSelectModule,
+    MaterialModule,
 
     // ngx-translate and the loader module
     HttpClientModule,
@@ -46,7 +40,6 @@ import { ClockContainerComponent } from '@src/app/components/clock-container/clo
         deps: [HttpClient]
       }
     }),
-
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -14,9 +14,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         TranslateTestingModule.withTranslations({ en: require('src/assets/i18n/en.json'), de: require('src/assets/i18n/de.json') }),
       ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
     }).compileComponents();
     translate = TestBed.inject(TranslateService);
     titleService = TestBed.inject(Title);
