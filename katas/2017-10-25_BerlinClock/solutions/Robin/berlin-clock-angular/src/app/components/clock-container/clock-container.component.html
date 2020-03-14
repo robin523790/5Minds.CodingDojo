@@ -1,9 +1,86 @@
-<app-display [date]="date"></app-display>
+<div class="container mat-app-background">
 
-<pre>
-    /**
-    * Component to contain the clock's DisplayComponent as well as a few
-    * other elements that allow to change the time and see the result in
-    * DisplayComponent.
-    */
-</pre>
+    <div class="control-panel">
+
+        <div>
+            <mat-form-field>
+                <mat-label>{{'@@Language' | translate}}</mat-label>
+                <mat-select [(value)]="language" (selectionChange)="onLanguageChanged()">
+                    <mat-option *ngFor="let lang of languages" value="{{lang}}">
+                        [{{lang.toUpperCase()}}] {{'@@Language.' + lang | translate}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <label class="control-label">{{'@@StartPause' | translate}}</label>
+            <mat-button-toggle-group [value]="runSpeed" (change)="setRunSpeed($event.value)">
+                <mat-button-toggle [value]="0">   <mat-icon>pause</mat-icon> </mat-button-toggle>
+                <mat-button-toggle [value]="1">   <mat-icon>play_arrow</mat-icon> </mat-button-toggle>
+                <mat-button-toggle [value]="5">   <mat-icon>fast_forward</mat-icon> x5 </mat-button-toggle>
+                <mat-button-toggle [value]="20">  <mat-icon>fast_forward</mat-icon> x20 </mat-button-toggle>
+                <mat-button-toggle [value]="100"> <mat-icon>fast_forward</mat-icon> x100 </mat-button-toggle>
+                <mat-button-toggle [value]="500"> <mat-icon>fast_forward</mat-icon> x500 </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+
+        <label class="control-label">{{'@@SetTime' | translate}}</label>
+        <table class="control-set-time">
+            <tr>
+                <td><button mat-raised-button (click)="addHours(5)"> <mat-icon>expand_less</mat-icon> </button></td>
+                <td></td>
+                <td><button mat-raised-button (click)="addMinutes(5)"> <mat-icon>expand_less</mat-icon> </button></td>
+                <td></td>
+                <td><button mat-raised-button (click)="addSeconds(5)"> <mat-icon>expand_less</mat-icon> </button></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button mat-raised-button (click)="addHours(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
+                <td></td>
+                <td><button mat-raised-button (click)="addMinutes(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
+                <td></td>
+                <td><button mat-raised-button (click)="addSeconds(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr class="control-show-time">
+                <td>{{date.getHours() | number: '2.0-0'}}</td>
+                <td>:</td>
+                <td>{{date.getMinutes() | number: '2.0-0'}}</td>
+                <td>:</td>
+                <td>{{date.getSeconds() | number: '2.0-0'}}</td>
+                <td></td>
+                <td>
+                    <button mat-raised-button [title]="'@@ResetTime' | translate" (click)="resetTime()">
+                        <mat-icon>settings_backup_restore</mat-icon>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td><button mat-raised-button (click)="addHours(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
+                <td></td>
+                <td><button mat-raised-button (click)="addMinutes(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
+                <td></td>
+                <td><button mat-raised-button (click)="addSeconds(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><button mat-raised-button (click)="addHours(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
+                <td></td>
+                <td><button mat-raised-button (click)="addMinutes(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
+                <td></td>
+                <td><button mat-raised-button (click)="addSeconds(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="control-panel">
+        <app-display [date]="date"></app-display>
+    </div>
+
+</div>

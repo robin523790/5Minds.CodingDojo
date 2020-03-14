@@ -1,3 +1,10 @@
 {
-    "@@app.title": "Berlin-Uhr"
+    "@@app.title": "Berlin-Uhr",
+    "@@StartPause": "Geschwindigkeit der Uhr",
+    "@@SetTime": "Uhrzeit einstellen",
+    "@@ResetTime": "Auf aktuelle Uhrzeit zurücksetzen",
+    "@@Language": "Sprache",
+    "@@Language.de": "Deutsch",
+    "@@Language.en": "Englisch (English)",
+    "@@Language.it": "Italienisch (Italiano)"
 }

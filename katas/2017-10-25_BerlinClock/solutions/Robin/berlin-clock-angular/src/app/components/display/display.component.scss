@@ -7,20 +7,22 @@ $display-col-active-seconds: #00ff00;
 $display-col-active-minutes: #ffff00;
 $display-col-active-quarters: #ff6600;
 $display-col-active-hours: #ff0000;
-$display-width: 440px;
+$display-width: 100%;
 $display-light-width: $display-width / 4;
 $display-light-height: 40px;
 $display-light-radius: 5px;
 $display-light-small-width: $display-width / 11;
-$display-light-seconds-width: $display-width / 3;
-$display-light-seconds-height: $display-width / 3;
-$display-light-seconds-radius: $display-width / 3;
+$display-light-seconds-width: 120px;
+$display-light-seconds-height: 120px;
+$display-light-seconds-radius: $display-light-seconds-height / 2 - 5px;
 $glow-effect-radius: 7px;
 
 // Pseudo-Bootstrap class, can be removed if Bootstrap is included in project
 .container {
     display: flex;
     flex-direction: column;
+    min-width: 200px;
+    max-width: 600px;
 }
 
 // Pseudo-Bootstrap class, can be removed if Bootstrap is included in project
