@@ -43,10 +43,14 @@ export class ClockData implements IClockData {
             throw new Error(`invalid argument 'secs: ${secs}'`);
         }
 
-        const fiveHrs = Math.floor(hours / 5);
-        const oneHrs = Math.floor(hours % 5);
-        const fiveMin = Math.floor(minutes / 5);
-        const oneMin = Math.floor(minutes % 5);
+        // Special case 00:00:00 --> show this as 24:00:00 (light everything!!!)
+        // (Not sure if this is part of the real Berlin Clock, but it looks great!)
+        const isMidnight = hours === 0 && minutes === 0 && secs === 0;
+
+        const fiveHrs = !isMidnight ? Math.floor(hours / 5) : 999;
+        const oneHrs = !isMidnight ? Math.floor(hours % 5) : 999;
+        const fiveMin = !isMidnight ? Math.floor(minutes / 5) : 999;
+        const oneMin = !isMidnight ? Math.floor(minutes % 5) : 999;
 
         // Initialize all arrays...
         for (let i = 0; i < 4; i++) {
@@ -61,8 +65,8 @@ export class ClockData implements IClockData {
             this.row5MinuteFields[i] = i < fiveMin;
         }
 
-        // Not clearly specified. For now, take every odd second as "on"...
-        this.secondField = (secs & 1) == 1;
+        // Not clearly specified. For now, take every even second as "on"...
+        this.secondField = (secs & 1) !== 1 || isMidnight;
     }
 
     /**

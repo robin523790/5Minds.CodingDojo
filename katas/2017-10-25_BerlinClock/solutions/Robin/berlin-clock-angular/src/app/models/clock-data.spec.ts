@@ -17,11 +17,12 @@ describe('ClockData', () => {
         expect(data.row1HourFields.length).toBe(4);
         expect(data.row5MinuteFields.length).toBe(11);
         expect(data.row1MinuteFields.length).toBe(4);
-        data.row5HourFields.forEach(b => expect(b).toBeFalse());
-        data.row1HourFields.forEach(b => expect(b).toBeFalse());
-        data.row5MinuteFields.forEach(b => expect(b).toBeFalse());
-        data.row1MinuteFields.forEach(b => expect(b).toBeFalse());
-        expect(data.secondField).toBeFalse();
+        // 00:00:00 gets interpreted as "24:59:59 = all lights on!" Special case treatment.
+        data.row5HourFields.forEach(b => expect(b).toBeTrue());
+        data.row1HourFields.forEach(b => expect(b).toBeTrue());
+        data.row5MinuteFields.forEach(b => expect(b).toBeTrue());
+        data.row1MinuteFields.forEach(b => expect(b).toBeTrue());
+        expect(data.secondField).toBeTrue();
     });
 
     it('should catch invalid hours argument', () => {
@@ -63,7 +64,7 @@ describe('ClockData', () => {
         expect(data.row1HourFields).toEqual([false, false, false, false]);
         expect(data.row5MinuteFields).toEqual([false, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([true, false, false, false]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
     });
 
     it('should parse 01:00:01 correctly', () => {
@@ -72,7 +73,7 @@ describe('ClockData', () => {
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([false, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([false, false, false, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
     });
 
     it('should parse 03:04:02 correctly', () => {
@@ -81,7 +82,7 @@ describe('ClockData', () => {
         expect(data.row1HourFields).toEqual([true, true, true, false]);
         expect(data.row5MinuteFields).toEqual([false, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([true, true, true, true]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
     });
 
     it('should parse 04:05:03 correctly', () => {
@@ -90,7 +91,7 @@ describe('ClockData', () => {
         expect(data.row1HourFields).toEqual([true, true, true, true]);
         expect(data.row5MinuteFields).toEqual([true, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([false, false, false, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
     });
 
     // Example case from https://de.wikipedia.org/wiki/Berlin-Uhr
@@ -100,97 +101,97 @@ describe('ClockData', () => {
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, false]);
         expect(data.row1MinuteFields).toEqual([false, false, false, false]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
         data = new ClockData(16, 51, 5);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, false]);
         expect(data.row1MinuteFields).toEqual([true, false, false, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
         data = new ClockData(16, 52, 6);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, false]);
         expect(data.row1MinuteFields).toEqual([true, true, false, false]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
         data = new ClockData(16, 53, 7);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, false]);
         expect(data.row1MinuteFields).toEqual([true, true, true, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
         data = new ClockData(16, 54, 8);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, false]);
         expect(data.row1MinuteFields).toEqual([true, true, true, true]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
         data = new ClockData(16, 55, 9);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, true]);
         expect(data.row1MinuteFields).toEqual([false, false, false, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
         data = new ClockData(16, 56, 10);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, true]);
         expect(data.row1MinuteFields).toEqual([true, false, false, false]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
         data = new ClockData(16, 57, 11);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, true]);
         expect(data.row1MinuteFields).toEqual([true, true, false, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
         data = new ClockData(16, 58, 12);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, true]);
         expect(data.row1MinuteFields).toEqual([true, true, true, false]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
         data = new ClockData(16, 59, 13);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, false, false, false]);
         expect(data.row5MinuteFields).toEqual([true, true, true, true, true, true, true, true, true, true, true]);
         expect(data.row1MinuteFields).toEqual([true, true, true, true]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
         data = new ClockData(17, 0, 14);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, true, false, false]);
         expect(data.row5MinuteFields).toEqual([false, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([false, false, false, false]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
         data = new ClockData(17, 1, 15);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, true, false, false]);
         expect(data.row5MinuteFields).toEqual([false, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([true, false, false, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
         data = new ClockData(17, 2, 16);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, true, false, false]);
         expect(data.row5MinuteFields).toEqual([false, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([true, true, false, false]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
         data = new ClockData(17, 3, 17);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, true, false, false]);
         expect(data.row5MinuteFields).toEqual([false, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([true, true, true, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
         data = new ClockData(17, 4, 18);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, true, false, false]);
         expect(data.row5MinuteFields).toEqual([false, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([true, true, true, true]);
-        expect(data.secondField).toBeFalse();
+        expect(data.secondField).toBeTrue();
         data = new ClockData(17, 5, 19);
         expect(data.row5HourFields).toEqual([true, true, true, false]);
         expect(data.row1HourFields).toEqual([true, true, false, false]);
         expect(data.row5MinuteFields).toEqual([true, false, false, false, false, false, false, false, false, false, false]);
         expect(data.row1MinuteFields).toEqual([false, false, false, false]);
-        expect(data.secondField).toBeTrue();
+        expect(data.secondField).toBeFalse();
     });
 
     it('should create identical values from Time', () => {
