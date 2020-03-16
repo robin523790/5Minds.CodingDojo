@@ -15,7 +15,6 @@ import { interval, Subscription } from 'rxjs';
 export class ClockContainerComponent implements OnInit, OnDestroy {
     
     @Input() language = 'de';
-    @Output() languageChanged = new EventEmitter<string/*language*/>();
 
     languages: string[];
     date = new Date();
@@ -42,6 +41,8 @@ export class ClockContainerComponent implements OnInit, OnDestroy {
         this.translate.use(this.language);
     }
 
+    // todo Move all non-GUI elements to TimerService
+    
     setRunSpeed(i: number) {
         this.runSpeed = i;
 
@@ -65,17 +66,23 @@ export class ClockContainerComponent implements OnInit, OnDestroy {
     }
 
     addHours(i: number) {
-        this.date.setHours(this.date.getHours() + i);
-        this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
+        if (i != null) {
+            this.date.setHours(this.date.getHours() + i);
+            this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
+        }
     }
 
     addMinutes(i: number) {
-        this.date.setMinutes(this.date.getMinutes() + i);
-        this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
+        if (i != null) {
+            this.date.setMinutes(this.date.getMinutes() + i);
+            this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
+        }
     }
 
     addSeconds(i: number) {
-        this.date.setSeconds(this.date.getSeconds() + i);
-        this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
+        if (i != null) {
+            this.date.setSeconds(this.date.getSeconds() + i);
+            this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
+        }
     }
 }

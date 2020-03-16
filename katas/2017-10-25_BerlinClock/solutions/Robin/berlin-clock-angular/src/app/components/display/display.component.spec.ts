@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { DisplayComponent } from '@src/app/components/display/display.component';
 import { ClockData } from '@src/app/models/clock-data';
-import { Component } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 @Component({
@@ -14,7 +14,7 @@ class TestHostComponent {
 describe('DisplayComponent', () => {
     let hostFixture: ComponentFixture<TestHostComponent>;
     let hostComp: TestHostComponent;
-    let debugElement;
+    let debugElement: DebugElement;
     let comp: DisplayComponent;
 
     beforeEach(() => {
