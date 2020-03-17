@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '@src/app/app-routing.module';
+import { AppComponent } from '@src/app/app.component';
 
 // Angular Material modules
 import { MaterialModule } from './material.module';
@@ -13,9 +14,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 // App internal components
-import { AppComponent } from '@src/app/app.component';
 import { DisplayComponent } from '@src/app/components/display/display.component';
 import { ClockContainerComponent } from '@src/app/components/clock-container/clock-container.component';
+import { TimerService } from './services/timer.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { ClockContainerComponent } from '@src/app/components/clock-container/clo
       }
     }),
   ],
-  providers: [],
+  providers: [TimerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

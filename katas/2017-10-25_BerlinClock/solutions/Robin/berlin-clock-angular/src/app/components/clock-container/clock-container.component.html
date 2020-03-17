@@ -14,7 +14,7 @@
 
         <div>
             <label class="control-label">{{'@@StartPause' | translate}}</label>
-            <mat-button-toggle-group [value]="runSpeed" (change)="setRunSpeed($event.value)">
+            <mat-button-toggle-group [value]="timerService.runSpeed" (change)="timerService.setRunSpeed($event.value)">
                 <!-- Setting "id" only for unittests to identify the correct element... -->
                 <mat-button-toggle id="btnSpeed0"   [value]="0">   <mat-icon>pause</mat-icon> </mat-button-toggle>
                 <mat-button-toggle id="btnSpeed1"   [value]="1">   <mat-icon>play_arrow</mat-icon> </mat-button-toggle>
@@ -29,52 +29,52 @@
         <table class="control-set-time">
             <tr>
                 <!-- Setting "id" only for unittests to identify the correct element... -->
-                <td><button mat-raised-button id="btn5h" (click)="addHours(5)"> <mat-icon>expand_less</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn5h" (click)="timerService.addHours(5)"> <mat-icon>expand_less</mat-icon> </button></td>
                 <td></td>
-                <td><button mat-raised-button id="btn5m" (click)="addMinutes(5)"> <mat-icon>expand_less</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn5m" (click)="timerService.addMinutes(5)"> <mat-icon>expand_less</mat-icon> </button></td>
                 <td></td>
-                <td><button mat-raised-button id="btn5s" (click)="addSeconds(5)"> <mat-icon>expand_less</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn5s" (click)="timerService.addSeconds(5)"> <mat-icon>expand_less</mat-icon> </button></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
-                <td><button mat-raised-button id="btn1h" (click)="addHours(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn1h" (click)="timerService.addHours(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
                 <td></td>
-                <td><button mat-raised-button id="btn1m" (click)="addMinutes(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn1m" (click)="timerService.addMinutes(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
                 <td></td>
-                <td><button mat-raised-button id="btn1s" (click)="addSeconds(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn1s" (click)="timerService.addSeconds(1)"> <mat-icon>arrow_drop_up</mat-icon> </button></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr class="control-show-time">
                 <!-- Setting "id" only for unittests to identify the correct element... -->
-                <td id="show_h">{{date.getHours() | number: '2.0-0'}}</td>
+                <td id="show_h">{{timerService.date.getHours() | number: '2.0-0'}}</td>
                 <td>:</td>
-                <td id="show_m">{{date.getMinutes() | number: '2.0-0'}}</td>
+                <td id="show_m">{{timerService.date.getMinutes() | number: '2.0-0'}}</td>
                 <td>:</td>
-                <td id="show_s">{{date.getSeconds() | number: '2.0-0'}}</td>
+                <td id="show_s">{{timerService.date.getSeconds() | number: '2.0-0'}}</td>
                 <td></td>
                 <td>
-                    <button mat-raised-button [title]="'@@ResetTime' | translate" (click)="resetTime()">
+                    <button mat-raised-button [title]="'@@ResetTime' | translate" (click)="timerService.resetTime()">
                         <mat-icon>settings_backup_restore</mat-icon>
                     </button>
                 </td>
             </tr>
             <tr>
-                <td><button mat-raised-button id="btn-1h" (click)="addHours(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn-1h" (click)="timerService.addHours(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
                 <td></td>
-                <td><button mat-raised-button id="btn-1m" (click)="addMinutes(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn-1m" (click)="timerService.addMinutes(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
                 <td></td>
-                <td><button mat-raised-button id="btn-1s" (click)="addSeconds(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn-1s" (click)="timerService.addSeconds(-1)"> <mat-icon>arrow_drop_down</mat-icon> </button></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
-                <td><button mat-raised-button id="btn-5h" (click)="addHours(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn-5h" (click)="timerService.addHours(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
                 <td></td>
-                <td><button mat-raised-button id="btn-5m" (click)="addMinutes(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn-5m" (click)="timerService.addMinutes(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
                 <td></td>
-                <td><button mat-raised-button id="btn-5s" (click)="addSeconds(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
+                <td><button mat-raised-button id="btn-5s" (click)="timerService.addSeconds(-5)"> <mat-icon>expand_more</mat-icon> </button></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -83,7 +83,7 @@
     </div>
 
     <div class="control-panel">
-        <app-display [date]="date"></app-display>
+        <app-display [date]="timerService.date"></app-display>
     </div>
 
 </div>

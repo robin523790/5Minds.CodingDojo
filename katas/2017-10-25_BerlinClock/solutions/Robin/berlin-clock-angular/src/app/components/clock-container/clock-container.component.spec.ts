@@ -9,7 +9,7 @@ import { MaterialModule } from '@src/app/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, DebugElement } from '@angular/core';
 import { DisplayComponent } from '../display/display.component';
-import { TextAst } from '@angular/compiler';
+import { TimerService } from '@src/app/services/timer.service';
 
 @Component({
     template: '<app-clock-container [language]="language"></app-clock-container>'
@@ -34,6 +34,7 @@ describe('ClockContainerComponent', () => {
                 RouterTestingModule,
                 TranslateTestingModule.withTranslations({ en: require('src/assets/i18n/en.json'), de: require('src/assets/i18n/de.json') }),
             ],
+            providers: [TimerService]
         }).compileComponents();
     }));
 
@@ -118,124 +119,34 @@ describe('ClockContainerComponent', () => {
         expect(found).toBeTrue();
     }));
 
-    it('date should be "now"', () => {
-        const t1 = comp.date.valueOf();
-        const t2 = new Date().valueOf();  // may be a few msecs "newer" than t1
-        expect(t2 - t1).toBeLessThan(100);  // allow for 100msecs difference
-    });
-
-    it('#addHours() should work', () => {
-        const refDate = '2020-03-16T12:34:56.123Z';
-        const tests: Array<[number, string]> = [
-            [undefined, refDate],
-            [null, refDate],
-            [  0, refDate],
-            [  1, '2020-03-16T13:34:56.123Z'],
-            [ 10, '2020-03-16T22:34:56.123Z'],
-            [ 12, '2020-03-17T00:34:56.123Z'],
-            [ 14, '2020-03-17T02:34:56.123Z'],
-            [ 20, '2020-03-17T08:34:56.123Z'],
-            [ 30, '2020-03-17T18:34:56.123Z'],
-            [ -1, '2020-03-16T11:34:56.123Z'],
-            [-10, '2020-03-16T02:34:56.123Z'],
-            [-12, '2020-03-16T00:34:56.123Z'],
-            [-14, '2020-03-15T22:34:56.123Z'],
-            [-20, '2020-03-15T16:34:56.123Z'],
-            [-30, '2020-03-15T06:34:56.123Z'],
-        ];
-        for (const test of tests) {
-            comp.date = new Date(refDate);
-            comp.addHours(test[0]);
-            expect(comp.date.toISOString()).toEqual(test[1]);
-        }
-    });
-
-    it('#addMinutes() should work', () => {
-        const refDate = '2020-03-16T12:34:56.123Z';
-        const tests: Array<[number, string]> = [
-            [undefined, refDate],
-            [null, refDate],
-            [   0, refDate],
-            [   1, '2020-03-16T12:35:56.123Z'],
-            [  10, '2020-03-16T12:44:56.123Z'],
-            [  60, '2020-03-16T13:34:56.123Z'],
-            [ 100, '2020-03-16T14:14:56.123Z'],
-            [ 200, '2020-03-16T15:54:56.123Z'],
-            [  -1, '2020-03-16T12:33:56.123Z'],
-            [ -10, '2020-03-16T12:24:56.123Z'],
-            [ -60, '2020-03-16T11:34:56.123Z'],
-            [-100, '2020-03-16T10:54:56.123Z'],
-            [-200, '2020-03-16T09:14:56.123Z'],
-        ];
-        for (const test of tests) {
-            comp.date = new Date(refDate);
-            comp.addMinutes(test[0]);
-            expect(comp.date.toISOString()).toEqual(test[1]);
-        }
-    });
-
-    it('#addSeconds() should work', () => {
-        const refDate = '2020-03-16T12:34:56.123Z';
-        const tests: Array<[number, string]> = [
-            [undefined, refDate],
-            [null, refDate],
-            [   0, refDate],
-            [   1, '2020-03-16T12:34:57.123Z'],
-            [  10, '2020-03-16T12:35:06.123Z'],
-            [  60, '2020-03-16T12:35:56.123Z'],
-            [ 100, '2020-03-16T12:36:36.123Z'],
-            [ 200, '2020-03-16T12:38:16.123Z'],
-            [  -1, '2020-03-16T12:34:55.123Z'],
-            [ -10, '2020-03-16T12:34:46.123Z'],
-            [ -60, '2020-03-16T12:33:56.123Z'],
-            [-100, '2020-03-16T12:33:16.123Z'],
-            [-200, '2020-03-16T12:31:36.123Z'],
-        ];
-        for (const test of tests) {
-            comp.date = new Date(refDate);
-            comp.addSeconds(test[0]);
-            expect(comp.date.toISOString()).toEqual(test[1]);
-        }
-    });
-
-    it('#resetTime() should work', () => {
-        const refDate = '2020-03-16T12:34:56.123Z';
-        comp.date = new Date(refDate);
-        comp.resetTime();
-        expect(comp.date.valueOf()).toBeCloseTo(new Date().valueOf(), 0);
-    });
-
     it('buttons "add x something" should call "#addSomething(x)"', fakeAsync(() => {
-        /*
-         * Strictly speaking, this only tests if clicking a button has the same effect
-         * as calling "addSomething(x)". This is sufficient because there are tests to
-         * ensure that the "addSomething(x)" methods work correctly.
-         */
+        const spyAddHour = spyOn(comp.timerService, 'addHours').and.callThrough();
+        const spyAddMins = spyOn(comp.timerService, 'addMinutes').and.callThrough();
+        const spyAddSecs = spyOn(comp.timerService, 'addSeconds').and.callThrough();
         const tests: Array<[string, string]> = [
             ['h', '5'], ['h', '1'], ['h', '-1'], ['h', '-5'],
             ['m', '5'], ['m', '1'], ['m', '-1'], ['m', '-5'],
             ['s', '5'], ['s', '1'], ['s', '-1'], ['s', '-5'],
         ];
-        tests.forEach(test => {
-            comp.date = new Date();
-            switch(test[0]) {
-                case 'h':  comp.addHours(+test[1]);  break;
-                case 'm':  comp.addMinutes(+test[1]);  break;
-                case 's':  comp.addSeconds(+test[1]);  break;
-            }
-            const expected = new Date(comp.date);
-            comp.resetTime();
-
+        tests.forEach((test, idx) => {
             const button = debugElement.nativeElement.querySelector(`#btn${test[1]}${test[0]}`);
             expect(button).toBeTruthy(`could not find button with id="btn${test[1]}${test[0]}"`)
             button.click();
-            expect(comp.date).toEqual(expected, `should add ${test[1]} ${test[0]}`);
+            hostFixture.detectChanges();
+            tick();
+
+            let spy;
+            switch (test[0]) {
+                case 'h': spy = spyAddHour; break;
+                case 'm': spy = spyAddMins; break;
+                case 's': spy = spyAddSecs; break;
+            }
+            expect(spy).toHaveBeenCalledTimes(idx % 4 + 1);
+            expect(spy).toHaveBeenCalledWith(+test[1]);
         });
     }));
 
-    it('should display time correctly', () => {
-        comp.date = new Date();
-        hostFixture.detectChanges();
+    it('should display the current time correctly', () => {
         const h = debugElement.nativeElement.querySelector(`#show_h`);
         const m = debugElement.nativeElement.querySelector(`#show_m`);
         const s = debugElement.nativeElement.querySelector(`#show_s`);
@@ -243,19 +154,21 @@ describe('ClockContainerComponent', () => {
         expect(m).toBeTruthy('should be able to find id="show_m"');
         expect(s).toBeTruthy('should be able to find id="show_s"');
         const time = `${h.textContent}:${m.textContent}:${s.textContent}`;
-        expect(time).toEqual(comp.date.toTimeString().substr(0, 8));
+        expect(time).toEqual(comp.timerService.date.toTimeString().substr(0, 8));
     });
 
     it('should set runSpeed on button click', fakeAsync(() => {
+        const spy = spyOn(comp.timerService, 'setRunSpeed').and.callThrough();
         const tests = [0, 1, 5, 20, 100, 500];
-        tests.forEach(test => {
+        tests.forEach((test, idx) => {
             const button = debugElement.nativeElement.querySelector(`#btnSpeed${test}-button`);  // use '-button' to access button inside mat-button-toggle
             expect(button).toBeTruthy(`should find id="btnSpeed${test}"`);
             button.click();
             hostFixture.detectChanges();
             tick();
-            expect(comp.runSpeed).toEqual(test, `should set speed to x${test} when clicking btnSpeed${test}`);
-            discardPeriodicTasks();
+            expect(spy).toHaveBeenCalledTimes(idx + 1);
+            expect(spy).toHaveBeenCalledWith(test);
         });
+        discardPeriodicTasks();
     }));
 });

@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { interval, Subscription } from 'rxjs';
+import { TimerService as TimerService } from '@src/app/services/timer.service';
 
 /**
  * Component to contain the clock's DisplayComponent as well as a few
@@ -12,17 +12,17 @@ import { interval, Subscription } from 'rxjs';
     templateUrl: './clock-container.component.html',
     styleUrls: ['./clock-container.component.scss']
 })
-export class ClockContainerComponent implements OnInit, OnDestroy {
+export class ClockContainerComponent implements OnInit {
     
     @Input() language = 'de';
 
     languages: string[];
-    date = new Date();
-    runSpeed = 1;
-    subscription$ = new Subscription();
-    timer$: Subscription = null;
 
-    constructor(public translate: TranslateService) {
+    constructor(
+        public translate: TranslateService,
+        public timerService: TimerService,
+    )
+    {
     }
 
     ngOnInit(): void {
@@ -30,59 +30,10 @@ export class ClockContainerComponent implements OnInit, OnDestroy {
         this.translate.getLangs().forEach((lang: string) => {
             this.languages.push(lang);
         });
-        this.setRunSpeed(this.runSpeed);
-    }
-
-    ngOnDestroy(): void {
-        this.subscription$.unsubscribe();
+        this.timerService.setRunSpeed(1);
     }
 
     onLanguageChanged() {
         this.translate.use(this.language);
-    }
-
-    // todo Move all non-GUI elements to TimerService
-    
-    setRunSpeed(i: number) {
-        this.runSpeed = i;
-
-        // Remove timer with old speed...
-        if (this.timer$) {
-            this.subscription$.remove(this.timer$);
-            this.timer$.unsubscribe();
-            this.timer$ = null;
-        }
-
-        // Create timer with new speed...
-        if (this.runSpeed > 0) {
-            this.timer$ = interval(1000 / this.runSpeed)
-                .subscribe(() => this.addSeconds(1));
-            this.subscription$.add(this.timer$);
-        }
-    }
-
-    resetTime() {
-        this.date = new Date();
-    }
-
-    addHours(i: number) {
-        if (i != null) {
-            this.date.setHours(this.date.getHours() + i);
-            this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
-        }
-    }
-
-    addMinutes(i: number) {
-        if (i != null) {
-            this.date.setMinutes(this.date.getMinutes() + i);
-            this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
-        }
-    }
-
-    addSeconds(i: number) {
-        if (i != null) {
-            this.date.setSeconds(this.date.getSeconds() + i);
-            this.date = new Date(this.date);  // Angular detects changes to non-primitives only after change to the memory address... :(
-        }
     }
 }
