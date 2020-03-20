@@ -114,12 +114,18 @@ describe('TimerServiceService', () => {
 
     {
         const tests = [
-            { description: 'time should advance 0 secs in 1 sec with runSpeed: 0', runSpeed: 0, expected: 0 },
-            { description: 'time should advance 1 secs in 1 sec with runSpeed: 1', runSpeed: 1, expected: 1 },
-            { description: 'time should advance 5 secs in 1 sec with runSpeed: 5', runSpeed: 5, expected: 5 },
-            { description: 'time should advance 20 secs in 1 sec with runSpeed: 20', runSpeed: 20, expected: 20 },
-            { description: 'time should advance 100 secs in 1 sec with runSpeed: 100', runSpeed: 100, expected: 100 },
-            { description: 'time should advance 500 secs in 1 sec with runSpeed: 500', runSpeed: 500, expected: 500 },
+            { description: 'time should advance 0 secs in 1 sec with runSpeed: undefined', runSpeed: undefined, wait: 1, expected: 0 },
+            { description: 'time should advance 0 secs in 1 sec with runSpeed: null', runSpeed: null, wait: 1, expected: 0 },
+            { description: 'time should advance 0 secs in 1 sec with runSpeed: -1000', runSpeed: -1000, wait: 1, expected: 0 },
+            { description: 'time should advance 0 secs in 1 sec with runSpeed: -1', runSpeed: -1, wait: 1, expected: 0 },
+            { description: 'time should advance 0 secs in 1 sec with runSpeed: 0', runSpeed: 0, wait: 1, expected: 0 },
+            { description: 'time should advance 1 secs in 1 sec with runSpeed: 1', runSpeed: 1, wait: 1, expected: 1 },
+            { description: 'time should advance 5 secs in 1 sec with runSpeed: 5', runSpeed: 5, wait: 1, expected: 5 },
+            { description: 'time should advance 20 secs in 1 sec with runSpeed: 20', runSpeed: 20, wait: 1, expected: 20 },
+            { description: 'time should advance 100 secs in 1 sec with runSpeed: 100', runSpeed: 100, wait: 1, expected: 100 },
+            { description: 'time should advance 500 secs in 1 sec with runSpeed: 500', runSpeed: 500, wait: 1, expected: 500 },
+            { description: 'time should advance 2000 secs in 4 sec with runSpeed: 500', runSpeed: 500, wait: 4, expected: 2000 },
+            { description: 'time should advance 400000 secs in 4 sec with runSpeed: 100000', runSpeed: 100000, wait: 4, expected: 400000 },
         ];
         tests.forEach(test => {
             it(test.description, (done) => {
@@ -130,7 +136,7 @@ describe('TimerServiceService', () => {
                     let endValue = service.date.valueOf();
                     expect((endValue - startValue) / 1000).toBeCloseTo(test.expected, 0);
                     done();
-                }, 1000);
+                }, 1000 * test.wait);
             });
         });
     }

@@ -19,6 +19,9 @@ export class TimerService implements OnDestroy {
     }
 
     setRunSpeed(i: number) {
+        if (!i) {
+            i = 0;
+        }
         this.runSpeed = i;
 
         // Remove timer with old speed...
