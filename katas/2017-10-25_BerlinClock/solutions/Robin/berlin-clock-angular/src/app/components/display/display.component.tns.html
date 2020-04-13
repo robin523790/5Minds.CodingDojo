@@ -1,1 +1,48 @@
-<Button text="display works!" class="btn btn-primary"></Button>
+<StackLayout>
+    <FlexboxLayout flexDirection="row" justifyContent="space-around">
+        <Label class="light seconds" [ngClass]="{'light-on': clockData.secondField}" style="text-align: center"></Label>
+    </FlexboxLayout>
+
+    <StackLayout orientation="horizontal">
+        <!--
+            It would be much nicer to solve this with *ngFor. But that would re-create
+            the DOM elements with every change, instead of modifying the existing elements.
+            And that, in turn, makes any kind of CSS transition effects impossible.
+        -->
+        <Label class="light hours" [ngClass]="{'light-on': clockData.row5HourFields[0]}"></Label>
+        <Label class="light hours" [ngClass]="{'light-on': clockData.row5HourFields[1]}"></Label>
+        <Label class="light hours" [ngClass]="{'light-on': clockData.row5HourFields[2]}"></Label>
+        <Label class="light hours" [ngClass]="{'light-on': clockData.row5HourFields[3]}"></Label>
+    </StackLayout>
+
+    <StackLayout orientation="horizontal">
+        <Label class="light hours" [ngClass]="{'light-on': clockData.row1HourFields[0]}"></Label>
+        <Label class="light hours" [ngClass]="{'light-on': clockData.row1HourFields[1]}"></Label>
+        <Label class="light hours" [ngClass]="{'light-on': clockData.row1HourFields[2]}"></Label>
+        <Label class="light hours" [ngClass]="{'light-on': clockData.row1HourFields[3]}"></Label>
+    </StackLayout>
+
+    <StackLayout orientation="horizontal">
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[0]}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[1]}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[2], 'quarters': true}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[3]}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[4]}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[5], 'quarters': true}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[6]}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[7]}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[8], 'quarters': true}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[9]}"></Label>
+        <Label class="light minutes minutes-small" [ngClass]="{'light-on': clockData.row5MinuteFields[10]}"></Label>
+    </StackLayout>
+
+    <StackLayout orientation="horizontal">
+        <Label class="light minutes" [ngClass]="{'light-on': clockData.row1MinuteFields[0]}"></Label>
+        <Label class="light minutes" [ngClass]="{'light-on': clockData.row1MinuteFields[1]}"></Label>
+        <Label class="light minutes" [ngClass]="{'light-on': clockData.row1MinuteFields[2]}"></Label>
+        <Label class="light minutes" [ngClass]="{'light-on': clockData.row1MinuteFields[3]}"></Label>
+    </StackLayout>
+
+    <!-- for debugging... -->
+    <!-- <Label text="{{this.date}}" style="text-align: center"></Label> -->
+</StackLayout>

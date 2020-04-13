@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { Routes } from '@angular/router';
-import { ClockContainerComponent } from './components/clock-container/clock-container.component';
+import { ClockContainerComponent } from './components/clock-container/clock-container.component.tns';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/clock', pathMatch: 'full' },

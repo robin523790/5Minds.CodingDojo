@@ -1,12 +1,5 @@
-$display-col-border: #101010;
-$display-col-inactive-seconds: #114411;
-$display-col-inactive-minutes: #333300;
-$display-col-inactive-quarters: #442200;
-$display-col-inactive-hours: #440000;
-$display-col-active-seconds: #00ff00;
-$display-col-active-minutes: #ffff00;
-$display-col-active-quarters: #ff6600;
-$display-col-active-hours: #ff0000;
+@import "display.colors";
+
 $display-width: 100%;
 $display-light-width: $display-width / 4;
 $display-light-height: 40px;

@@ -1,1 +1,39 @@
-<Button text="clock-container works!" class="btn btn-primary"></Button>
+<ScrollView>
+    <StackLayout class="clock-container">
+        <FlexboxLayout flexDirection="row" justifyContent="space-between">
+            <Label text="Choose clock speed" class="control-label"></Label>
+            <Label text="{{sliderLabel}}" class="control-label"></Label>
+        </FlexboxLayout>
+        <Slider value="{{sliderValue}}" minValue="0" maxValue="5"
+                (valueChange)="onSliderChanged($event.value)"></Slider>
+
+        <Label text="Set time" class="control-label"></Label>
+        <GridLayout class="set-time-grid" columns="60, 10, 60, 10, 60, 10, 60, *" rows="40, 40, 55, 40, 40">
+            <Button text="+5" col="0" row="0" (tap)="timerService.addHours(5)"></Button>
+            <Button text="+5" col="2" row="0" (tap)="timerService.addMinutes(5)"></Button>
+            <Button text="+5" col="4" row="0" (tap)="timerService.addSeconds(5)"></Button>
+            
+            <Button text="+" col="0" row="1" (tap)="timerService.addHours(1)"></Button>
+            <Button text="+" col="2" row="1" (tap)="timerService.addMinutes(1)"></Button>
+            <Button text="+" col="4" row="1" (tap)="timerService.addSeconds(1)"></Button>
+            
+            <Label text="{{timerService.date.getHours() | number: '2.0-0'}}" col="0" row="2"></Label>
+            <Label text=":" col="1" row="2"></Label>
+            <Label text="{{timerService.date.getMinutes() | number: '2.0-0'}}" col="2" row="2"></Label>
+            <Label text=":" col="3" row="2"></Label>
+            <Label text="{{timerService.date.getSeconds() | number: '2.0-0'}}" col="4" row="2"></Label>
+
+            <Button text="o" col="6" row="2" (tap)="timerService.resetTime()"></Button>
+
+            <Button text="-" col="0" row="3" (tap)="timerService.addHours(-1)"></Button>
+            <Button text="-" col="2" row="3" (tap)="timerService.addMinutes(-1)"></Button>
+            <Button text="-" col="4" row="3" (tap)="timerService.addSeconds(-1)"></Button>
+
+            <Button text="-5" col="0" row="4" (tap)="timerService.addHours(-5)"></Button>
+            <Button text="-5" col="2" row="4" (tap)="timerService.addMinutes(-5)"></Button>
+            <Button text="-5" col="4" row="4" (tap)="timerService.addSeconds(-5)"></Button>
+        </GridLayout>
+
+        <app-display [date]="timerService.date"></app-display>
+    </StackLayout>
+</ScrollView>

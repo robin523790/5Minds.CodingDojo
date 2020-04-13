@@ -16,7 +16,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 // App internal components
 import { DisplayComponent } from '@src/app/components/display/display.component';
 import { ClockContainerComponent } from '@src/app/components/clock-container/clock-container.component';
-import { TimerService } from './services/timer.service';
+import { TimerService } from '@src/app/services/timer.service';
 
 @NgModule({
   declarations: [

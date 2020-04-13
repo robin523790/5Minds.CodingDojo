@@ -1,1 +1,27 @@
-/* Add mobile styles for the component here.  */
+@import "clock-container.colors.scss";
+
+.clock-container {
+    margin: 8%;
+}
+
+.control-label {
+    color: $control-text-col;
+    user-select: none;
+    margin: 2rem 0 0.3rem 0;
+    font-size: 14sp;
+    display: block;
+}
+
+.set-time-grid {
+    margin-bottom: 20dp;
+
+    > Button {
+        width: 100%;
+    }
+
+    > Label {
+        width: 100%;
+        text-align: center;
+        font-size: 40sp;
+    }
+}
