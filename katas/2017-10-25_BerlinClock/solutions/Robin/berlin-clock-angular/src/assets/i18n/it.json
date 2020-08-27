@@ -1,0 +1,10 @@
+{
+    "@@app.title": "Orologio di Berlino",
+    "@@StartPause": "Velocità dell'orologio",
+    "@@SetTime": "Impostazione dell'ora",
+    "@@ResetTime": "Reset all'ora corrente",
+    "@@Language": "Lingua",
+    "@@Language.de": "Tedesco",
+    "@@Language.en": "Inglese (English)",
+    "@@Language.it": "Italiano"
+}
